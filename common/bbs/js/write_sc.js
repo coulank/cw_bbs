@@ -228,6 +228,7 @@ cws.ready(function(){
         }});
         return false;
     };
+
     if (form === null) return;
     if (typeof(form.update_target) !== 'undefined'){
         update_target = form.update_target;
@@ -476,6 +477,10 @@ cws.ready(function(){
             }
         }
     }
+    var set_textarea = function(select){
+        textSetSelection(select, textarea);
+        submit_able();
+    }
     var under = document.querySelector('body>div.under');
     var large_toggle = function(){
         textarea.classList.toggle('large');
@@ -490,8 +495,34 @@ cws.ready(function(){
 					document.activeElement.blur();
 					e.returnValue = false;
                 break;
-            break;
-			}
+            }
+            // リスト化
+            var inc = 0;
+			switch (e.code) {
+                case 'Comma': 
+                    inc = -1;
+                break;
+                case 'Period': 
+                    inc = 1;
+                break;
+            }
+            if (inc !== 0) {
+                var select = textGetSelection(textarea, true);
+                select[1] = select[1].replace(/(\n|^)([+\-]*)/g,
+                    function(m0, m1, m2) {
+                        if (inc > 0) {
+                            if (m2 === '') {
+                                m2 = (e.shiftKey) ? '+' : '-';
+                            } else {
+                                m2 += m2.slice(-1);
+                            }
+                        } else {
+                            m2 = m2.slice(-inc);
+                        }
+                        return m1 + m2;
+                    });
+                set_textarea(select);
+            }
 		}
         switch (e.keyCode) {
             case 13: // enter
@@ -527,42 +558,42 @@ cws.ready(function(){
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[b:' + select[1] + ']';
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 73: // i
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[i:' + select[1] + ']';
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 76: // l
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[' + select[1] + ']';
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 83: // s
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[s:' + select[1] + ']';
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 85: // u
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = cws.to.chartoasc(select[1]);
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 191: // /
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = "/*\n" + select[1] + "\n*/";
-                	textSetSelection(select, textarea);
+                	set_textarea(select);
                 }
             break;
             case 222: // ~
@@ -705,11 +736,26 @@ var textSetSelection = function(setValue, textElement, rangeFlag){
     textElement.selectionEnd = endPos;
 	return textElement;
 };
-var textGetSelection = function(textElement){
-	return new Array(
+var textGetSelection = function(textElement, lineFlag){
+    lineFlag = cws.check.nullvar(lineFlag, false);
+	var retval = new Array(
 	textElement.value.slice(0, textElement.selectionStart),
 	textElement.value.slice(textElement.selectionStart, textElement.selectionEnd),
-	textElement.value.slice(textElement.selectionEnd));
+    textElement.value.slice(textElement.selectionEnd));
+    if (lineFlag) {
+        var mstr = '';
+        if ((mstr = retval[0].match(/[^\n]*$/)[0]) !== '') {
+            textElement.selectionStart -= mstr.length;
+            retval[0] = textElement.value.slice(0, textElement.selectionStart);
+            retval[1] = mstr + retval[1];
+        }
+        if ((mstr = retval[2].match(/^[^\n]*/)[0]) !== '') {
+            textElement.selectionEnd += mstr.length;
+            retval[2] = textElement.value.slice(textElement.selectionEnd);
+            retval[1] = retval[1] + mstr;
+        }
+    }
+    return retval;
 }
 cws.event('keydown', function(e){
     var do_mf_g = false;
