@@ -496,28 +496,38 @@ cws.ready(function(){
 					e.returnValue = false;
                 break;
             }
-            // リスト化
+            // リスト化など
             var inc = 0;
+            var str = '';
 			switch (e.code) {
                 case 'Comma': 
                     inc = -1;
                 break;
-                case 'Period': 
+                case 'Period': case 'Minus': 
                     inc = 1;
+                    str = '-';
+                break;
+                case 'Semicolon': 
+                    inc = 1;
+                    str = '+';
+                break;
+                case 'Quate': 
+                    inc = 1;
+                    str = '*';
+                break;
+                case 'Equal':
+                    inc = 1;
+                    str = '%';
                 break;
             }
             if (inc !== 0) {
                 var select = textGetSelection(textarea, true);
-                select[1] = select[1].replace(/(\n|^)([+\-]*)/g,
+                select[1] = select[1].replace(/(\n|^)([+\-*%]*)/g,
                     function(m0, m1, m2) {
                         if (inc > 0) {
-                            if (m2 === '') {
-                                m2 = (e.shiftKey) ? '+' : '-';
-                            } else {
-                                m2 += m2.slice(-1).repeat(inc);
-                            }
+                            m2 += str.repeat(inc);
                         } else {
-                            m2 = m2.slice(-inc);
+                            m2 = m2.slice(0, inc);
                         }
                         return m1 + m2;
                     });
