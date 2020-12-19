@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+# mod_rewriteを有効
+# 上書きされるので都度書き直し必要あり
+RewriteEngine On
+# BEGIN CWhome
+# SSL化
+RewriteCond %{HTTPS} off
+# ホストがローカルかポートの頭が80の場合は処理をしない
+RewriteCond %{HTTP_HOST} !(local|home$|192\.168|127\.0|\:\d+$|\[\:{2}\d*\]|\[\:{2}f{4}\:c0a8\:\w*\])
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R]
+
+RewriteBase /bbs/
+# URLの末尾調整
+RewriteCond %{REQUEST_URI} !/$
+RewriteCond %{REQUEST_URI} !\.[^/\.]+$
+RewriteRule ^(.*)$ $1/ [R]
+
+# 存在しないパスはindexに全て飛ばす
+RewriteCond %{REQUEST_URI} /$|\.[^/\.]+$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+
+# 特定の拡張子へのアクセスを禁止
+RewriteCond %{REQUEST_URI} ^(.*)\.(db)$
+RewriteRule ^(.*)$ /err/302b.html [L]
+
+ErrorDocument 404 /redirect/404.html
+ErrorDocument 500 /redirect/500.html
+# END CWhome
+</IfModule>

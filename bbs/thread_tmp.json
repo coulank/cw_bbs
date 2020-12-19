@@ -1,0 +1,16 @@
+{
+    "background_color": "black",
+    "theme_color": "black",
+    "description": "一時的に置くところ",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "/common/images/icon/bbs_icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "name":"一時所",
+    "short_name": "一時",
+    "start_url": "/bbs/tmp"
+}

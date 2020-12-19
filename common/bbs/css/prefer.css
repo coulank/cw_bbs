@@ -1,0 +1,82 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgba(2, 3, 2, 1);
+        font-size: 16px;
+        color: #e0e0e0;
+    }
+    body>div.main,
+    div#search_option
+    {
+        background-color: #0e0e0e;
+        border-color: #111111;
+    }
+    div.post_data{
+        border-bottom-color: #1e1e1e;
+    }
+    div.post {
+        background-color: #000000;
+        box-shadow: 0 -2px 2px #000000;
+    }
+    textarea, input, select{
+        color: rgb(220, 220, 220);
+        background-color: rgb(14, 14, 14);        
+    }
+    form#post_form textarea {
+        border-color:  rgb(82, 82, 82);
+    }
+    #search_option input,
+    #search_option select {
+        background-color: rgb(37 37 37);
+    }
+    input[type="submit"],
+    input[type="button"],
+    select,
+    div#search_option
+    {
+        border-color: #4a4d4a;
+        border-color: #6a6d6ab4;
+    }
+    form#post_form .button
+    {
+        color: rgb(220, 220, 220);
+        background-color: rgb(34, 65, 0);
+        border-color: rgba(106, 109, 106, 0.63);
+    }
+    .post_data .text .num{
+        color: #555;
+    }
+    .post_data .text .body{
+        color: rgb(220, 220, 220);
+    }
+    .post_data .info{
+        color: #888;
+    }
+    .paging > input {
+        border: solid #292f27;
+        border: solid #46472569;
+        background: rgba(29, 61, 13);
+        background: rgba(29, 61, 13, 0.7);
+        color: rgb(220, 220, 220);
+    }
+    a {
+        color: #7d9e5d;
+    }
+    a:hover {
+        color: #a9c47f;
+    }
+    .post_data.select_target{
+        outline: #342 solid;
+    }
+    .post_data.update_target{
+        outline: #573 solid;
+    }
+    button.jump:focus{
+        outline: #2b2b2b 0.1em solid;
+    }
+    button.jump:hover{
+        outline: #707070 0.1em solid;
+    }
+    blockquote {
+        background: #373737;
+    }
+}

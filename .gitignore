@@ -1,0 +1,25 @@
+# * develop tool folder *
+# dependencies
+node_modules/
+# production
+build/
+# launch
+# .vscode/
+
+# * file maker *
+# image
+*.psd
+*.clip
+*.ai
+
+# object
+# big file -> ignored
+/big/
+
+# temporary
+temp
+tmp/
+.cache/
+
+# db
+*.db

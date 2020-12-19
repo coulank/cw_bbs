@@ -1,0 +1,16 @@
+{
+    "background_color": "black",
+    "theme_color": "black",
+    "description": "掲示板です",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "/common/images/icon/bbs_icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "name":"掲示板サンプル",
+    "short_name": "掲示板",
+    "start_url": "/bbs/"
+}

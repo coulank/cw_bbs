@@ -1,0 +1,542 @@
+body, body * {
+}
+
+body {
+    background-color: #dbe9d6;
+    color: #000;
+    letter-spacing: 0;
+    line-height: 1.3125;
+    font-size: 16px;
+    word-break: break-word;
+}
+body, pre.inline, textarea, input{
+    font-family: Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+h1 {
+    font-size: 4em;
+}
+h2 {
+    font-size: 3em;
+}
+h3, .h3 {
+    font-size: xx-large;
+    font-weight: bold;
+}
+h4, .h4 {
+    font-size: x-large;
+    font-weight: bold;
+}
+h5 {
+    font-size: large;
+}
+.center {
+    text-align: center;
+}
+.text_left {
+    text-align: left;
+}
+.text_right {
+    text-align: right;
+}
+div.text span.body * {
+    display: inline-block;
+}
+div.text span.body div {
+    width: 100%;
+    display: inline-block;
+}
+input, select{
+    border: solid #999 0.1em;
+    border: solid #9996 0.1em;
+    height: 2em;
+}
+select {
+    max-width: 8em;
+}
+input[type="number"] {
+    max-width: 4em;
+}
+input[type="checkbox"] {
+    height: 1em;
+}
+input[type="submit"],
+input[type="button"],
+div#search_option
+{
+    border: solid #719771;
+    border-color: #476d47a1;
+    border-width: 0.1em;
+}
+div.ib, span.ib{
+    display: inline-block;
+}
+div#search_option{
+    width: 19.5em;
+    border-width: 0.1em;
+    position: fixed;
+    background-color: #fafafa;
+    margin-top: 0.5em;
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+    overflow: auto;
+}
+div#search_option > *{
+    margin: 0.4em 0;
+}
+div#search_option > * label > span{
+    width: 4em;
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.2em;
+}
+div#search_option input[type="number"]{
+    width: 5em;
+}
+body>div.main {
+    width: 100%;
+    margin: 3em auto;
+    margin-bottom: 1em;
+    max-width: 46em;
+    background-color: #fafafa;
+    border: solid #e6e6e6;
+    border-radius: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+div.post_data{
+    border-bottom-color: #eeeeee;
+}
+.thread >div.post_data:not(:last-child) {
+    border-bottom-style: solid;
+    border-bottom-width: 0.1em;
+}
+.post_data .body img ,
+.post_data .body video ,
+.post_data .body object {
+    max-width: 100%;
+    max-height: 16em;
+    z-index: 3;
+}
+
+div.post {
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    bottom: 0;
+    background-color: #fafafa;
+    box-shadow: 0 -2px 2px #fafafa;
+}
+.old_mode div.post {
+    position: relative;
+    margin-bottom: 1em;
+}
+.old_mode .set.fixed.post {
+    position: relative;
+}
+div.post form > * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.thread{
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.post_data .right {
+    text-align: right;
+}
+
+form#post_form {
+    margin: 0.1em auto;
+}
+
+form#post_form .buttons {
+    width: auto;
+    max-width: 8em;
+    overflow: hidden;
+    text-align: left;
+}
+form#post_form .buttons:nth-child(1) {
+    max-width: 2.4em;
+    width: 7%;
+}
+form#post_form .buttons:nth-child(3) {
+    max-width: 5em;
+    width: 13%;
+}
+
+form#post_form .button {
+    display: inline-block;
+    font-size: 18px;
+    border-radius: 0.1em;
+    border: 0;
+    line-height: 2em;
+    height: 2em;
+    color: #eee;
+    background-color: #8a6;
+    box-sizing: border-box;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+}
+form#post_form :disabled {
+    opacity: 0.6;
+}
+.wmax {
+    width: 100%;
+}
+form#post_form > * {
+    display: block;
+}
+form#post_form .write_space > * {
+    display: inline-block;
+    vertical-align: bottom;
+}
+form#post_form .write_space > *:nth-child(n + 2) {
+    margin-left: 0.2em;
+}
+div.file_input,
+.old_mode #file_selector_button {
+    display: none!important;
+}
+div.search{
+    z-index: 20;
+}
+.search.set.fixed{
+    margin-right: 0.4em;
+    margin-top: 0.2em;
+}
+.paging {
+    margin: 0.2em;
+}
+.search > * ,
+.search form > * {
+    vertical-align: middle;
+}
+.search input[type="submit"]
+{
+    padding: 0.1em 0.6em;
+}
+div#search_option div.search_buttons{
+    margin-top: 1em;
+}
+div.search_buttons input {
+    width: 6.2em;
+    margin: 0 0.6em;
+}
+.search form#form_search_option input.top
+{
+    margin-right: 0.3em;
+    opacity: 0.7;
+}
+.old_mode .search input[type="submit"],
+.old_mode div.file_input {
+    display: inline-block!important;
+}
+.upload .up_list {
+    /* display: inline-block; */
+}
+.upload .up_list > * {
+    height: 4em;
+    display: inline-block;
+    margin: 0.2em 0.2em 0.4em 0.2em;
+    position: relative;
+}
+.up_list .remove {
+    cursor: pointer;
+    /*     opacity: 0; */
+    position: absolute;
+    max-height: 100%;
+    max-width: 100%;
+    font-size: 1.7em;
+    line-height: 1.1em;
+    vertical-align: middle;
+    height: 1.1em;
+    width: 1.1em;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    color: #e4e4e4;
+    background-color: #0000008c;
+}
+.up_list .remove:hover {
+    /* opacity: 1; */
+}
+.up_list img {
+    height: inherit;
+    max-width: 10em;
+}
+.up_list object {
+    border: #414141 solid;
+    height: inherit;
+    max-width: 8em;
+}
+form#post_form textarea {
+    height: 2.2em;
+    border-radius: 0.2em;
+    border: solid rgb(177, 177, 177) 0.1em;
+    padding: 0.1em 0.1em 0.1em 0.24em;
+    font-size: 1em;
+    transition: 100ms;
+    width: 75%;
+    max-width: 600px;
+    resize: none;
+}
+form#post_form textarea:focus {
+    border-color: rgb(129, 129, 126);
+    outline: none;
+}
+form#post_form textarea:focus,
+form#post_form textarea:hover,
+form#post_form textarea.focus,
+body>div.under
+{
+    height: 7em;
+    /* height: 14vh;
+    min-height: 4em;
+    max-height: 10em; */
+}
+
+.old_mode form#post_form textarea{
+    height: 7em;
+    min-height: 4em;
+    min-width: 4em;
+    resize: both;
+}
+
+form#post_form textarea.large:focus,
+body>div.under.large
+{
+    max-height: 70vh!important;
+    height: 20em!important;
+}
+
+.post_data {
+    padding: 1.5em 1em 0.1em;
+}
+.post_data:last-child {
+    margin-bottom: 1em;
+}
+.post_data .text > *{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.post_data .text .body{
+    width: 100%;
+    padding: 0 4.2em 0.7em;
+}
+
+.post_data .info{
+    font-size: 0.8em;
+    text-align: right;
+    margin-right: 1em;
+    color: #888;
+    margin-top: 0.2em;
+}
+.post_data .info > *{
+    margin-left: 0.5em;
+}
+.post_data .info span, .post_data .info > *{
+    vertical-align: middle;
+}
+span.date {
+    font-family: monospace;
+}
+input.button, div.button {
+    cursor: pointer;
+}
+.paging > input {
+    display: inline-block;
+    opacity: 0.8;
+    background: rgb(68, 136, 34);
+    background: rgba(68, 136, 34, 0.7);
+    border: #80886f solid 0.1em;
+    border: #8c906475 solid 0.1em;
+    border-radius: 0.1em;
+    color: #f6f6f6;
+    font-size: 0.8em;
+    height: 2.1em;
+    line-height: 1.9em;
+    margin: 0px 0.3px;
+    max-width: 6.5vw;
+    width: 2em;
+    padding: 0;
+}
+
+.set.left{
+    left: 0;
+}
+.set.right{
+    right: 0;
+}
+.set.bottom{
+    bottom: 0;
+}
+.set.top{
+    top: 0;
+}
+.set.fixed {
+    position: fixed;
+    text-align: right;
+}
+.set.fixed > * {
+    display: inline-block;
+}
+.set.fixed form#form_search_main {
+    width: 13em;
+    max-width: 55vw;
+}
+.set.fixed form#form_search_main input[type="text"] {
+    width: 100%;
+    opacity: 0.7;
+    border-radius: 0.4em;
+    padding: 0.2em 0.4em;
+    border: solid #999 0.1em;
+    border: solid #9996 0.1em;
+    transition: 80ms;
+}
+.set.fixed input[type="text"]:focus {
+    outline: none;
+}
+
+.set.fixed input[name="q"]:focus,
+.set.fixed input[name="q"]:hover
+{
+    opacity: 1;
+}
+
+.bottom .cell{
+    color: #fff7;    
+    margin: 0.3em 0.4em;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.5em;
+}
+.paging > * > * {
+    vertical-align: middle;
+}
+a {
+    text-decoration: none;
+    color: #539243;
+}
+a.response {
+    text-decoration: underline;
+}
+a:hover {
+    color: #73a85a;
+}
+a.tag {
+    color: #649049;
+}
+a.add {
+    text-decoration: none;
+    color: #55702abd;
+}
+.post_data.select_target{
+    outline: #cde2b8 solid;
+}
+.post_data.update_target{
+    outline: #9d6 solid;
+}
+pre {
+	word-break: break-word;
+	white-space: pre;           /* CSS 2.0 */
+	white-space: pre-wrap;      /* CSS 2.1 */
+	white-space: pre-line;      /* CSS 3.0 */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap;  /* HP Printers */
+	word-wrap: break-word;      /* IE 5+ */
+}
+audio{
+    width: 100%;
+    max-width: 20em;
+}
+.highlight{
+    background-color:#b0db1b29;
+}
+.post_data .num{
+    color: #aaa;
+    width: auto;
+    padding-right: 1%;
+    text-align: right;
+    font-size: 1em;
+    line-height: 1.2em;
+    font-family: monospace;
+    display: inline-block;
+}
+@media screen and (max-width: 40em) {
+    .post_data {
+        padding: 1.2em 0.1em 0.1em 0.1em;
+    }
+    .post_data .text .body{
+        padding: 0 1.1em 0.4em;
+    }
+    .post_data .num{
+        padding-right: 0.2%;
+    }
+    .post_data .info{
+        font-size: 0.7em;
+    }
+}
+form#post_form textarea.dropover {
+    border: #89c54e solid;
+}
+div.top {
+    vertical-align: middle;
+}
+button.jump{
+    border: 0;
+    background: transparent;
+    margin: 0 0.3em 0 0;
+    padding: 0;
+    font-size: 14pt;
+    color: #aaaaaa;
+    color: #aaaaaa99;
+    width: 1.4em;
+    max-width: 6vw;
+}
+.top-fade.fade{
+    opacity: 0;
+    animation: fadeInTopfade 0.4s ease 0s 1 forwards;
+}
+.top-fade:not(.fade){
+    display:none;
+}
+@keyframes fadeInTopfade {
+    0% {opacity: 0; display:inline;}
+    100% {opacity: 0.4; display:inline;}
+}
+button.jump:focus{
+    outline: #c5cec2 0.1em solid;
+}
+button.jump:hover{
+    outline: #9fb398 0.1em solid;
+}
+ol, ul {
+    margin-left: 1.2em;
+}
+div.text span.body li {
+    display: list-item;
+}
+div.text span.body ol,
+div.text span.body ul,
+div.text span.body blockquote {
+    display: block;
+}
+blockquote {
+    background: #e4e4e4;
+    border-radius: 0.5em;
+    padding: 1em 1.5em 1em 2em;
+    margin: 0.5em 0;
+    width: 100%;
+}
