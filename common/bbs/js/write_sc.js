@@ -514,7 +514,7 @@ cws.ready(function(){
                             if (m2 === '') {
                                 m2 = (e.shiftKey) ? '+' : '-';
                             } else {
-                                m2 += m2.slice(-1);
+                                m2 += m2.slice(-1).repeat(inc);
                             }
                         } else {
                             m2 = m2.slice(-inc);
