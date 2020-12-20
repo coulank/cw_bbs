@@ -338,8 +338,8 @@ $q_value = get_val($cws_request, 'q', '');
         if ($id_is_edit_num) {
             ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
         } elseif ($id_is_task && $cookie_task) {
-            ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
             ?> <a href='?q=off%3Atask' onclick='return confirm("タスクを非表示にしますか？");'>－</a><?php
+            ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
         } elseif ($id_is_alarm && $cookie_alarm) {
             ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>×</a><?php
         } elseif ($id_is_index && $is_delete_tmp) {
