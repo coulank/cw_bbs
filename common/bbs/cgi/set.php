@@ -205,6 +205,7 @@ $q_value = get_val($cws_request, 'q', '');
                 'highlight_q' => $highlight_q
             ));
         $view_alarm = isset($option['view_alarm']);
+        $view_task = isset($option['view_task']);
         $cookie_task = isset($_COOKIE['task']);
         $cookie_alarm = isset($_COOKIE['alarm']);
         $is_delete_tmp = $delete_tmp_path !== '';
@@ -252,6 +253,7 @@ $q_value = get_val($cws_request, 'q', '');
             }
             $_edit_mode = $edit_mode;
             $new = get_val($var, 'new', '');
+            $new_str = (($new === '') ? $id_str.'_date' : $new);
             $text = $autolink->get_text();
             $text_origin = \htmlspecialchars($var['text']);
             $id_is_num =  preg_match('/\d+/', $id_str);
@@ -296,10 +298,10 @@ $q_value = get_val($cws_request, 'q', '');
         else if ($cws_thread_name_visible) { ?><span><?php echo($var['name']); ?></span><?php }
         $date_id_ins =  " id='date_$id_str'";
         if ($id_is_num) {
-            ?> <a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><span class='date'><?php echo ($new); ?></span></a><?php
+            ?> <a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><span class='date'><?php echo ($new_str); ?></span></a><?php
         } elseif ($id_is_index) {
             if ($id_is_index) {
-                ?> <a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><span class='date'><?php echo (($new === '') ? $id_str.'_date' : $new); ?></span></a><?php
+                ?> <a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><span class='date'><?php echo ($new_str) ?></span></a><?php
             }
             $theme = isset($_COOKIE['theme_prefer']) ? $_COOKIE['theme_prefer']: 'prefer';
             switch ($theme) {
@@ -314,21 +316,25 @@ $q_value = get_val($cws_request, 'q', '');
                 break;
             }
             if ($task_enable && !$cookie_task) {
-                ?> <a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'><span class='date'>＋</span></a><?php
+                if ($view_task) {
+                    ?> <a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'><span class='date'>＋</span></a><?php
+                } else {
+                    ?> <a href='?q=view%3Atask'><span class='date'>Ｔ</span></a><?php
+                }
             }
             if ($alarm_enable && !$cookie_alarm) {
                 if ($view_alarm) {
-                    ?> <a href='?q=on%3Aalarm' onclick='return confirm("3時間毎のアラームを設置しますか？");'><span class='date'>Ⅲ</span></a><?php
+                    ?> <a href='?q=on%3Aalarm' onclick='return confirm("3時間毎のアラームを設置しますか？");'><span class='date'>＋</span></a><?php
                 } else {
                     ?> <a href='?q=view%3Aalarm'><span class='date'>Ⅲ</span></a><?php
                 }
             }
         } else if ($id_is_task) {
-            ?> <a href='?q=view%3Atask'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new); ?></span></a><?php
+            ?> <a href='?q=view%3Atask'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span></a><?php
         } else if ($id_is_alarm) {
-            ?> <a href='?q=view%3Aalarm'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new); ?></span></a><?php
+            ?> <a href='?q=view%3Aalarm'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span></a><?php
         } else {
-            ?><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new); ?></span><?php
+            ?><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span><?php
         }
         if ($addr_edit_mode && isset($var['addr'])) {
             ?> <a href='' onclick='return addr_action("<?php echo $var["addr"]; ?>",<?php
@@ -341,7 +347,7 @@ $q_value = get_val($cws_request, 'q', '');
             ?> <a href='?q=off%3Atask' onclick='return confirm("タスクを非表示にしますか？");'>－</a><?php
             ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
         } elseif ($id_is_alarm && $cookie_alarm) {
-            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>×</a><?php
+            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>－</a><?php
         } elseif ($id_is_index && $is_delete_tmp) {
             ?> <a href='?id=tmp&delete_action' onclick='return confirm("一時ファイルを削除しますか？");'>×</a><?php
         }
