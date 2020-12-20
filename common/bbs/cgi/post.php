@@ -214,7 +214,9 @@ if ($isset_text || count($_FILES) > 0) {
                 $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $db_now, $db_now)";
                 $db->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
-        } else if ($update_id == 'task') {
+        } elseif ($update_id == 'alarm') {
+            setcookie($update_id, $text, time()+60*60*24*30*6, '/');
+        } elseif ($update_id == 'task') {
             $tdb = DB::create($db_sqlite_tmp);
             $tdb_now = $tdb->now();
             thread_index_check($tdb);
@@ -226,12 +228,10 @@ if ($isset_text || count($_FILES) > 0) {
                 $tdb->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
             unset($tdb);
-        } else if ($update_id == 'alarm') {
-            setcookie($update_id, $text, time()+60*60*24*30*6, '/');
         }}
         $post_exit = true;
     }}
-} else if (isset($_REQUEST['id'])) {
+} elseif (isset($_REQUEST['id'])) {
     if ($owner_login && isset($_REQUEST['delete_action'])) {
         $delete_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : '';
         if ($delete_id !== '') {

@@ -205,9 +205,9 @@ $q_value = get_val($cws_request, 'q', '');
                 'highlight_q' => $highlight_q
             ));
         $view_alarm = isset($option['view_alarm']);
+        $cookie_alarm = isset($_COOKIE['alarm']);
         $view_task = isset($option['view_task']);
         $cookie_task = isset($_COOKIE['task']);
-        $cookie_alarm = isset($_COOKIE['alarm']);
         $is_delete_tmp = $delete_tmp_path !== '';
         $var = array();
         $deftbl = false;    // 今のメインテーブルと異なる書き込みかどうか
@@ -315,13 +315,6 @@ $q_value = get_val($cws_request, 'q', '');
                     ?> <a href='?q=theme%3Adark'><span class='date'>Prefer</span></a><?php
                 break;
             }
-            if ($task_enable && !$cookie_task) {
-                if ($view_task) {
-                    ?> <a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'><span class='date'>＋</span></a><?php
-                } else {
-                    ?> <a href='?q=view%3Atask'><span class='date'>Ｔ</span></a><?php
-                }
-            }
             if ($alarm_enable && !$cookie_alarm) {
                 if ($view_alarm) {
                     ?> <a href='?q=on%3Aalarm' onclick='return confirm("3時間毎のアラームを設置しますか？");'><span class='date'>＋</span></a><?php
@@ -329,10 +322,17 @@ $q_value = get_val($cws_request, 'q', '');
                     ?> <a href='?q=view%3Aalarm'><span class='date'>Ⅲ</span></a><?php
                 }
             }
-        } else if ($id_is_task) {
-            ?> <a href='?q=view%3Atask'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span></a><?php
-        } else if ($id_is_alarm) {
+            if ($task_enable && !$cookie_task) {
+                if ($view_task) {
+                    ?> <a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'><span class='date'>＋</span></a><?php
+                } else {
+                    ?> <a href='?q=view%3Atask'><span class='date'>Ｔ</span></a><?php
+                }
+            }
+        } elseif ($id_is_alarm) {
             ?> <a href='?q=view%3Aalarm'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span></a><?php
+        } elseif ($id_is_task) {
+            ?> <a href='?q=view%3Atask'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span></a><?php
         } else {
             ?><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span><?php
         }
@@ -343,11 +343,11 @@ $q_value = get_val($cws_request, 'q', '');
         }
         if ($id_is_edit_num) {
             ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
+        } elseif ($id_is_alarm && $cookie_alarm) {
+            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>－</a><?php
         } elseif ($id_is_task && $cookie_task) {
             ?> <a href='?q=off%3Atask' onclick='return confirm("タスクを非表示にしますか？");'>－</a><?php
             ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
-        } elseif ($id_is_alarm && $cookie_alarm) {
-            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>－</a><?php
         } elseif ($id_is_index && $is_delete_tmp) {
             ?> <a href='?id=tmp&delete_action' onclick='return confirm("一時ファイルを削除しますか？");'>×</a><?php
         }

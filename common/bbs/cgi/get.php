@@ -343,11 +343,11 @@ function get_exec($param = null){
                                 case 'size':
                                     $other_opt['view_size'] = true;
                                 break;
-                                case 'task':
-                                    $other_opt['view_task'] = true;
-                                break;
                                 case 'alarm':
                                     $other_opt['view_alarm'] = true;
+                                break;
+                                case 'task':
+                                    $other_opt['view_task'] = true;
                                 break;
                                 case 'memory':
                                     $flag_array['memory'] = true;

@@ -366,27 +366,13 @@ if (!$post_mode) {
     list('data' => $arr, 'max' => $max_page, 'limit' => $page_limit, 'count' => $search_count, 'page' => $page,
         'highlight' => $highlight_q, 'order' => $order, 'option' => $option, 'all' => $all) = $ret;
 
-        if (isset($option['view_size'])) {
-            array_push($top_res, array(
-                'text'=> '' , 'posts' => 'size', 'name' => 'サイズ'
-            ));
-        }
-        if (!isset($task_enable)) $task_enable = true;
-        if (($task_enable && isset($_COOKIE['task'])) || isset($option['view_task'])) {
-            $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
-            $tdb = DB::create($db_sqlite_tmp);
-            thread_index_check($tdb);
-            if ($tdb->exists($thread_index, 'name', $index_post_value)) {
-                $sql = "SELECT `text`, `time` FROM `$thread_index` WHERE `name` = ?";
-                $index_db_dir = $tdb->execute_all($sql, $index_post_value)[0];
-                $tmp_array['text'] = $index_db_dir['text'];
-                $tmp_array['new'] = $index_db_dir['time'];
-            }
-            unset($tdb);
-            array_push($top_res, $tmp_array);
-        }
-        if (!isset($alarm_enable)) $alarm_enable = true;
-        if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
+    if (isset($option['view_size'])) {
+        array_push($top_res, array(
+            'text'=> '' , 'posts' => 'size', 'name' => 'サイズ'
+        ));
+    }
+    if (!isset($alarm_enable)) $alarm_enable = true;
+    if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
         $now = new \DateTime();
         $set_hour = 3;
         if (isset($_COOKIE['alarm'])) {
@@ -407,7 +393,21 @@ if (!$post_mode) {
             , 'posts'=>'alarm', 'name' => 'アラーム', 'time' => $cur_time, 'new' => $cur_time
         ));
     }
-    for ($i = count($top_res) - 1; $i >= 0; $i--) {
+    if (!isset($task_enable)) $task_enable = true;
+    if (($task_enable && isset($_COOKIE['task'])) || isset($option['view_task'])) {
+        $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
+        $tdb = DB::create($db_sqlite_tmp);
+        thread_index_check($tdb);
+        if ($tdb->exists($thread_index, 'name', $index_post_value)) {
+            $sql = "SELECT `text`, `time` FROM `$thread_index` WHERE `name` = ?";
+            $index_db_dir = $tdb->execute_all($sql, $index_post_value)[0];
+            $tmp_array['text'] = $index_db_dir['text'];
+            $tmp_array['new'] = $index_db_dir['time'];
+        }
+        unset($tdb);
+        array_push($top_res, $tmp_array);
+    }
+for ($i = count($top_res) - 1; $i >= 0; $i--) {
         array_unshift($arr, $top_res[$i]);
     }
 }
