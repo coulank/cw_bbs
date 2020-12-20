@@ -88,6 +88,9 @@ if ($isset_text || count($_FILES) > 0) {
             if (is_array($idt)) {
                 list('id' => $update_id, 'posts' => $search_posts, 'thread' => $post_thread, 'table' => $post_table) = $idt;
             }
+            if ($update_id === 'task') {
+                $file_dir = "$tmp_bbs_path/objects$index_post_value";
+            }
         } else {
             $posts_num = max_posts($post_thread) + 1;
         }
@@ -104,7 +107,7 @@ if ($isset_text || count($_FILES) > 0) {
         if (count($_FILES) > 0) {
             if ($text !== '') $text .= "\n";
             $date = \date_create();
-            $dir = $file_dir.'/'.date_format($date,'Y').'/'.date_format($date,'n').'/';
+            $dir = $file_dir.(preg_match('/\/$/',$file_dir)?'':'/').date_format($date,'Y').'/'.date_format($date,'n').'/';
             $dir_d = path_auto_doc($dir, true);
             // $thm_dir = $dir_d.'thumb/';
             // auto_mkdir($thm_dir);
@@ -214,12 +217,13 @@ if ($isset_text || count($_FILES) > 0) {
         } else if ($update_id == 'task') {
             $tdbi = DBI::create($db_sqlite_tmp);
             $tdb = DB::create($tdbi);
+            $tdb_now = $tdb->now();
             thread_index_check($tdb);
             if ($tdb->exists($thread_index, 'name', $index_post_value)) {
-                $sql = "UPDATE `$thread_index` SET `text` = ?, `thread` = ?, `addr` = ?, `time` = $db_now WHERE `name` = ?";
+                $sql = "UPDATE `$thread_index` SET `text` = ?, `thread` = ?, `addr` = ?, `time` = $tdb_now WHERE `name` = ?";
                 $tdb->execute($sql, $text, $main_thread, $_SERVER['REMOTE_ADDR'], $index_post_value);
             } else {
-                $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $db_now, $db_now)";
+                $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $tdb_now, $tdb_now)";
                 $tdb->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
             unset($tdb); unset($tdbi);
@@ -252,6 +256,7 @@ if ($isset_text || count($_FILES) > 0) {
             $sql = "DELETE FROM `$thread_index` WHERE `name` = ?";
             $tdb->execute($sql, $index_post_value);
             unset($tdb); unset($tdbi);
+            auto_rmdir("$tmp_bbs_path/objects$index_post_value");
         } else if ($delete_id == 'tmp') {
             if ($delete_tmp_path !== '') {
                 $db->disconnect();

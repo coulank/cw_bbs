@@ -8,8 +8,10 @@ $private_owner_login = $owner_login;
 // if (!isset($cws_sqlite_flag)) $cws_sqlite_flag = true;
 
 $request_enable = isset($_REQUEST['q']);
-$tmp_bbs_path = get_docpath('/tmp/bbs');
-$tmp_bbs_db = $tmp_bbs_path.'/bbs_content.db';
+$tmp_bbs_path = '/tmp/bbs';
+$tmp_bbs_fullpath = path_auto_doc($tmp_bbs_path, true);
+
+$tmp_bbs_db = $tmp_bbs_fullpath.'/bbs_content.db';
 $db_sqlite_tmp = array('service' => 'sqlite', 'host' => $tmp_bbs_db);
 
 $delete_tmp_path = ''; 
