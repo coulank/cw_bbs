@@ -323,6 +323,8 @@ $q_value = get_val($cws_request, 'q', '');
                     ?> <a href='?q=view%3Aalarm'><span class='date'>Ⅲ</span></a><?php
                 }
             }
+        } else if ($id_is_task) {
+            ?> <a href='?q=view%3Atask'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new); ?></span></a><?php
         } else if ($id_is_alarm) {
             ?> <a href='?q=view%3Aalarm'><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new); ?></span></a><?php
         } else {
