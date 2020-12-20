@@ -211,6 +211,18 @@ if ($isset_text || count($_FILES) > 0) {
                 $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $db_now, $db_now)";
                 $db->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
+        } else if ($update_id == 'task') {
+            $tdbi = DBI::create($db_sqlite_tmp);
+            $tdb = DB::create($tdbi);
+            thread_index_check($tdb);
+            if ($tdb->exists($thread_index, 'name', $index_post_value)) {
+                $sql = "UPDATE `$thread_index` SET `text` = ?, `thread` = ?, `addr` = ?, `time` = $db_now WHERE `name` = ?";
+                $tdb->execute($sql, $text, $main_thread, $_SERVER['REMOTE_ADDR'], $index_post_value);
+            } else {
+                $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $db_now, $db_now)";
+                $tdb->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
+            }
+            unset($tdb); unset($tdbi);
         } else if ($update_id == 'alarm') {
             setcookie($update_id, $text, time()+60*60*24*30*6, '/');
         }}
@@ -234,6 +246,12 @@ if ($isset_text || count($_FILES) > 0) {
         } else if ($delete_id == 'index') {
             $sql = "DELETE FROM `$thread_index` WHERE `name` = ?";
             $db->execute($sql, $index_post_value);
+        } else if ($delete_id == 'task') {
+            $tdbi = DBI::create($db_sqlite_tmp);
+            $tdb = DB::create($tdbi);
+            $sql = "DELETE FROM `$thread_index` WHERE `name` = ?";
+            $tdb->execute($sql, $index_post_value);
+            unset($tdb); unset($tdbi);
         } else if ($delete_id == 'tmp') {
             if ($delete_tmp_path !== '') {
                 $db->disconnect();

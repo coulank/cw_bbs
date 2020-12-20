@@ -205,6 +205,7 @@ $q_value = get_val($cws_request, 'q', '');
                 'highlight_q' => $highlight_q
             ));
         $view_alarm = isset($option['view_alarm']);
+        $cookie_task = isset($_COOKIE['task']);
         $cookie_alarm = isset($_COOKIE['alarm']);
         $is_delete_tmp = $delete_tmp_path !== '';
         $var = array();
@@ -260,6 +261,7 @@ $q_value = get_val($cws_request, 'q', '');
                 $_edit_mode = false;
             }
             $id_is_alarm = $id_str === 'alarm';
+            $id_is_task = $id_str === 'task';
             $strong_mode = ($id_is_alarm && $view_alarm);
             $center_mode = ($id_is_alarm);
             $id_is_edit_num = $_edit_mode && ($id_is_num||$id_is_index);
@@ -311,6 +313,9 @@ $q_value = get_val($cws_request, 'q', '');
                     ?> <a href='?q=theme%3Adark'><span class='date'>Prefer</span></a><?php
                 break;
             }
+            if ($task_enable && !$cookie_task) {
+                ?> <a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'><span class='date'>＋</span></a><?php
+            }
             if ($alarm_enable && !$cookie_alarm) {
                 if ($view_alarm) {
                     ?> <a href='?q=on%3Aalarm' onclick='return confirm("3時間毎のアラームを設置しますか？");'><span class='date'>Ⅲ</span></a><?php
@@ -330,12 +335,15 @@ $q_value = get_val($cws_request, 'q', '');
         }
         if ($id_is_edit_num) {
             ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
+        } elseif ($id_is_task && $cookie_task) {
+            ?> <a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a><?php
+            ?> <a href='?q=off%3Atask' onclick='return confirm("タスクを非表示にしますか？");'>－</a><?php
         } elseif ($id_is_alarm && $cookie_alarm) {
-            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを削除しますか？");'>×</a><?php
+            ?> <a href='?q=off%3Aalarm' onclick='return confirm("アラームを非表示にしますか？");'>×</a><?php
         } elseif ($id_is_index && $is_delete_tmp) {
             ?> <a href='?id=tmp&delete_action' onclick='return confirm("一時ファイルを削除しますか？");'>×</a><?php
         }
-        if ($id_is_edit_num||$id_is_alarm) {
+        if ($id_is_edit_num||$id_is_alarm||$id_is_task) {
             ?> <a href='' class='update_calling_elem' onclick='return update_postdata_textarea("<?php echo $id_str; ?>", true);'>▽</a><?php
         }?>
         </div>

@@ -85,7 +85,7 @@ if ($url_name === '') {
         $owner_login = true;
         $addr_edit_mode = false;
         $cws_thread_name_visible = true;
-        $delete_tmp_path = '/tmp/bbs';
+        $delete_tmp_path = "$tmp_bbs_path/public";
         $file_dir ="$delete_tmp_path/objects/";
         $cws_sqlite_host = path_auto_doc("$delete_tmp_path/bbs_content.db", true);
         $cws_sqlite_flag = true;

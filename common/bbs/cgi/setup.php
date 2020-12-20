@@ -94,20 +94,26 @@ foreach ($create_tables as &$a_table) {
     }
 }
 $thread_index = isset($thread_index) ? $thread_index : 'thread_index';
-if (!$db->exists($thread_index)) {
-    $sql = "CREATE TABLE `$thread_index` (
-        `ID` " . $db->set_inc() . ",
-        `posts` " . $db->set_int() . ",
-        `thread` " . $db->set_text(60) . ",
-        `name` " . $db->set_text(60) . ",
-        `addr` " . $db->set_text(60) . ",
-        `new` " . $db->set_timestamp() . ",
-        `time` " . $db->set_timestamp() . ",
-        `text` " . $db->set_text() .
-        $db->set_inc_foot() . "
-        )";
-    $db->execute($sql);
+function thread_index_check($_db = null, $_thread_index = null) {
+    global $thread_index, $db;
+    if (is_null($_db)) $_db = $db;
+    if (is_null($_thread_index)) $_thread_index = $thread_index;
+    if (!$_db->exists($thread_index)) {
+        $sql = "CREATE TABLE `$thread_index` (
+            `ID` " . $_db->set_inc() . ",
+            `posts` " . $_db->set_int() . ",
+            `thread` " . $_db->set_text(60) . ",
+            `name` " . $_db->set_text(60) . ",
+            `addr` " . $_db->set_text(60) . ",
+            `new` " . $_db->set_timestamp() . ",
+            `time` " . $_db->set_timestamp() . ",
+            `text` " . $_db->set_text() .
+            $_db->set_inc_foot() . "
+            )";
+        $_db->execute($sql);
+    }
 }
+thread_index_check();
 $index_thread_add = (isset($index_thread_add)) ? $index_thread_add : false;
 $index_post_value = $cws->path.($index_thread_add ? ('#'.$threads) : '');
 $iplist_table = isset($iplist_table) ? $iplist_table : 'iplist';
@@ -360,13 +366,28 @@ if (!$post_mode) {
     list('data' => $arr, 'max' => $max_page, 'limit' => $page_limit, 'count' => $search_count, 'page' => $page,
         'highlight' => $highlight_q, 'order' => $order, 'option' => $option, 'all' => $all) = $ret;
 
-    if (!isset($alarm_enable)) $alarm_enable = true;
-    if (isset($option['view_size'])) {
-        array_push($top_res, array(
-            'text'=> '' , 'posts' => 'size', 'name' => 'サイズ'
-        ));
-    }
-    if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
+        if (isset($option['view_size'])) {
+            array_push($top_res, array(
+                'text'=> '' , 'posts' => 'size', 'name' => 'サイズ'
+            ));
+        }
+        if (!isset($task_enable)) $task_enable = true;
+        if (($task_enable && isset($_COOKIE['task'])) || isset($option['view_task'])) {
+            $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
+            $tdbi = DBI::create($db_sqlite_tmp);
+            $tdb = DB::create($tdbi);
+            thread_index_check($tdb);
+            if ($tdb->exists($thread_index, 'name', $index_post_value)) {
+                $sql = "SELECT `text`, `time` FROM `$thread_index` WHERE `name` = ?";
+                $index_db_dir = $tdb->execute_all($sql, $index_post_value)[0];
+                $tmp_array['text'] = $index_db_dir['text'];
+                $tmp_array['new'] = $index_db_dir['time'];
+            }
+            unset($tdb); unset($tdbi);
+            array_push($top_res, $tmp_array);
+        }
+        if (!isset($alarm_enable)) $alarm_enable = true;
+        if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
         $now = new \DateTime();
         $set_hour = 3;
         if (isset($_COOKIE['alarm'])) {

@@ -36,11 +36,12 @@ function get_exec($param = null){
     $thread_nots = array();
     $order = 'DESC';
     if (isset($_COOKIE['order']) && strtoupper($_COOKIE['order']) == 'ASC') $order = 'ASC';
-    global $cws_request, $cws_sitemap, $cws_filter_tag, $cws_add_search_q, $cws_secret_search_q, $private_owner_login;
+    global $cws_request, $cws_sitemap, $cws_filter_tag, $cws_add_search_q, $cws_secret_search_q, $private_owner_login, $index_post_value;
     if (isset($cws_request) && is_array($cws_request)) $_req = $cws_request; else $_req = $_REQUEST;
     if (isset($cws_sitemap)) $_sitemap = $cws_sitemap; else $_sitemap = '[./:トップ]';
     if (isset($cws_filter_tag) && is_array($cws_filter_tag)) $_filter_tag = $cws_filter_tag; else $_filter_tag = array();
     if (!isset($cws_add_search_q)) $cws_add_search_q = '';
+    if (!isset($index_post_value)) $index_post_value = '';
     if (!isset($cws_secret_search_q)) $cws_secret_search_q = ''; else $cws_secret_search_q = "( $cws_secret_search_q )";
     $secret_search_list = explode(' ', $cws_secret_search_q);
     $req_notag = get_val($_req, 'nq', '');
@@ -83,7 +84,8 @@ function get_exec($param = null){
             &$search_q, &$get_exp_func, &$stmt_array, &$add_strs, &$add_strs_func, &$_page_limit,
             &$where_in, &$nest_array, &$name_in_array, &$flag_array, &$thread_filters, &$thread_nots,
             &$since, &$until, &$order, &$e_request_a, &$_db, &$exec, $_req, $_sitemap, &$_filter_tag,
-            &$cws_add_search_q, &$secret_search_list, &$null, &$j, &$other_opt, &$private_owner_login){
+            &$cws_add_search_q, &$secret_search_list, &$null, &$j, &$other_opt,
+            &$private_owner_login, &$index_post_value){
         $e_search_q = array_merge($secret_search_list, (function($q){
             if (preg_match_all('/\s*(^|[\s()])\s*([^\s()]*)/', $q, $m)){
                 $i = 0; $c = count($m[1]);
@@ -300,17 +302,27 @@ function get_exec($param = null){
                         continue 2; break;
                         case 'on':
                         case 'off':
+                            ;
+                            $set_cookie = null;
+                            $set_path = '/';
                             switch($exp_value) {
-                                case 'alarm':
-                                    switch($exp_key) {
-                                        case 'on':
-                                            setcookie($exp_value, '3', time()+60*60*24*30*6, '/');
-                                        break;
-                                        case 'off':
-                                            setcookie($exp_value, '', time(), '/');
-                                        break;
-                                    }
+                                case 'task':
+                                    $set_cookie = 1;
+                                    $set_path = $index_post_value;
                                 break;
+                                case 'alarm':
+                                    $set_cookie = 3;
+                                break;
+                            }
+                            if (!is_null($set_cookie)) {
+                                switch($exp_key) {
+                                    case 'on':
+                                        setcookie($exp_value, $set_cookie, time()+60*60*24*30*6, $set_path);
+                                    break;
+                                    case 'off':
+                                        setcookie($exp_value, '', time(), $set_path);
+                                    break;
+                                }
                             }
                             $reload_flag = true;
                         continue 2; break;
@@ -330,6 +342,9 @@ function get_exec($param = null){
                                 break;
                                 case 'size':
                                     $other_opt['view_size'] = true;
+                                break;
+                                case 'task':
+                                    $other_opt['view_task'] = true;
                                 break;
                                 case 'alarm':
                                     $other_opt['view_alarm'] = true;
