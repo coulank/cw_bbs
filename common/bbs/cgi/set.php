@@ -260,7 +260,7 @@ $q_value = get_val($cws_request, 'q', '');
             $id_is_index = $id_str === 'index';
             $index_edit = false;
             if ($id_is_index){
-                $index_edit = $is_delete_tmp ? false : $_edit_mode;
+                $index_edit = $_edit_mode;
             }
             $id_is_alarm = $id_str === 'alarm';
             $id_is_task = $id_str === 'task';
