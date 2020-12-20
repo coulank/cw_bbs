@@ -511,7 +511,7 @@ cws.ready(function(){
                     inc = 1;
                     str = '+';
                 break;
-                case 'Quate': 
+                case 'Quote': 
                     inc = 1;
                     str = '*';
                 break;
