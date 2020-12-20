@@ -215,8 +215,7 @@ if ($isset_text || count($_FILES) > 0) {
                 $db->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
         } else if ($update_id == 'task') {
-            $tdbi = DBI::create($db_sqlite_tmp);
-            $tdb = DB::create($tdbi);
+            $tdb = DB::create($db_sqlite_tmp);
             $tdb_now = $tdb->now();
             thread_index_check($tdb);
             if ($tdb->exists($thread_index, 'name', $index_post_value)) {
@@ -226,7 +225,7 @@ if ($isset_text || count($_FILES) > 0) {
                 $sql = "INSERT INTO `$thread_index` (`text`, `name`, `thread`, `addr`, `new`, `time`) VALUES (?, ?, ?, ?, $tdb_now, $tdb_now)";
                 $tdb->execute($sql, $text, $index_post_value, $main_thread, $_SERVER['REMOTE_ADDR']);
             }
-            unset($tdb); unset($tdbi);
+            unset($tdb);
         } else if ($update_id == 'alarm') {
             setcookie($update_id, $text, time()+60*60*24*30*6, '/');
         }}
@@ -251,11 +250,10 @@ if ($isset_text || count($_FILES) > 0) {
             $sql = "DELETE FROM `$thread_index` WHERE `name` = ?";
             $db->execute($sql, $index_post_value);
         } else if ($delete_id == 'task') {
-            $tdbi = DBI::create($db_sqlite_tmp);
-            $tdb = DB::create($tdbi);
+            $tdb = DB::create($db_sqlite_tmp);
             $sql = "DELETE FROM `$thread_index` WHERE `name` = ?";
             $tdb->execute($sql, $index_post_value);
-            unset($tdb); unset($tdbi);
+            unset($tdb);
             auto_rmdir("$tmp_bbs_path/objects$index_post_value");
         } else if ($delete_id == 'tmp') {
             if ($delete_tmp_path !== '') {

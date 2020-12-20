@@ -374,8 +374,7 @@ if (!$post_mode) {
         if (!isset($task_enable)) $task_enable = true;
         if (($task_enable && isset($_COOKIE['task'])) || isset($option['view_task'])) {
             $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
-            $tdbi = DBI::create($db_sqlite_tmp);
-            $tdb = DB::create($tdbi);
+            $tdb = DB::create($db_sqlite_tmp);
             thread_index_check($tdb);
             if ($tdb->exists($thread_index, 'name', $index_post_value)) {
                 $sql = "SELECT `text`, `time` FROM `$thread_index` WHERE `name` = ?";
@@ -383,7 +382,7 @@ if (!$post_mode) {
                 $tmp_array['text'] = $index_db_dir['text'];
                 $tmp_array['new'] = $index_db_dir['time'];
             }
-            unset($tdb); unset($tdbi);
+            unset($tdb);
             array_push($top_res, $tmp_array);
         }
         if (!isset($alarm_enable)) $alarm_enable = true;
