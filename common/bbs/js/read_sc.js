@@ -10,42 +10,42 @@ window.set_post_cursor = function(){
     }
 }
 window.other_sc.doc.push(function(e){
-    switch (e.keyCode) {
-        case 72: // h
+    switch (e.code) {
+        case 'KeyH':
             if (mf_g_mode) window.jump_url = './'; break;
-        case 84: // t
+        case 'KeyT':
             if (mf_g_mode) window.jump_url = '?q=%23タグ'; break;
-        case 86: // v
+        case 'KeyV':
             if (mf_g_mode) { window.jump_url = '?q=filter%3avideos'; }
         break;
-        case 65: // a
+        case 'KeyA':
             if (mf_g_mode) { window.jump_url = '?q=filter%3aaudios'; }
         break;
-        case 190: // .
+        case 'Period':
             if (natural_mode) { location.href = ''; }
         break;
-        case 74: // j
+        case 'KeyJ':
             if (natural_mode) {
                 window.posts_back();
             }
         break;
-        case 75: // k
+        case 'KeyK':
             if (natural_mode) {
                 window.posts_forward();
             }
         break;
-        case 13: // Enter
+        case 'Enter':
             set_post_cursor();
             if (natural_mode && document.activeElement.tagName.toUpperCase() === 'BODY') {
                 post_list[post_cursor].querySelector('a').click();
             }
         break;
-        case 85: // back -> u
+        case 'KeyU': // back
             if (natural_mode) {
                 window.page_back();
             }
         break;
-        case 73: // next -> i
+        case 'KeyI': // next
             if (natural_mode) {
                 set_post_cursor();
                 window.page_forward();
@@ -53,6 +53,12 @@ window.other_sc.doc.push(function(e){
                 window.jump_url = '?q=filter%3aimages';
             }
         break;
+        case 'Digit1':
+            if (mf_g_mode) window.jump_url = '?id=index'; break;
+        case 'Digit2':
+            if (mf_g_mode) window.jump_url = '?q=view%3Atask'; break;
+        case 'Digit3':
+            if (mf_g_mode) window.jump_url = '?q=view%3Aalarm'; break;
     }
 });
 window.posts_back = function(){ window.postsing(-1); };

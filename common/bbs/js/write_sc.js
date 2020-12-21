@@ -151,8 +151,8 @@ cws.ready(function(){
     if (form !== null && typeof(form.text) !== 'undefined') textarea = form.text;
     if (search !== null)
     cws.event('keydown', function(e){
-        switch (e.keyCode) {
-            case 27: // esc
+        switch (e.code) {
+            case 'Escape':
                 if (activeFocus != null) {
                     if (isNaN(activeFocus)) {
                         cws.dom.setupFocus(activeFocus);
@@ -470,7 +470,7 @@ cws.ready(function(){
     }
     form.onkeydown = function(e) {
         if (e.ctrlKey) {
-            if (e.keyCode === 83) {
+            if (e.code === 'KeyS') {
                 do_submit(e);
                 e.keyCode = 0;
                 return false;
@@ -488,10 +488,10 @@ cws.ready(function(){
     }
     form.addEventListener('keydown', function(e){
 		if (e.altKey) {
-			switch (e.keyCode) {
-                case 81: // q
-				case 88: // x
-				case 90: // z
+			switch (e.code) {
+                case 'KeyQ':
+                case 'KeyX':
+                case 'KeyZ':
 					document.activeElement.blur();
 					e.returnValue = false;
                 break;
@@ -534,15 +534,15 @@ cws.ready(function(){
                 set_textarea(select);
             }
 		}
-        switch (e.keyCode) {
-            case 13: // enter
+        switch (e.code) {
+            case 'Enter':
                 if (e.ctrlKey) {
                     do_submit(e);
                 } else if (e.altKey) {
                     large_toggle();
                 }
             break;
-            case 27: // esc
+            case 'Escape':
                 if (activeFocus != null) {
                     if (isNaN(activeFocus)) {
                         cws.dom.setupFocus(activeFocus);
@@ -559,55 +559,56 @@ cws.ready(function(){
                 }
                 e.returnValue = false;
             break;
-            case 80: // p
+            case 'KeyP':
                 if (e.altKey) {
                     textarea.value = textarea.value.replace(/(#!\s*\S*\s+|@tos\s+|@tos$|^)/, "@tos ");
                 }
             break;
-            case 66: // b
+            case 'KeyB':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[b:' + select[1] + ']';
                 	set_textarea(select);
                 }
             break;
-            case 73: // i
+            case 'KeyI':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[i:' + select[1] + ']';
                 	set_textarea(select);
                 }
             break;
-            case 76: // l
+            case 'KeyL':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[' + select[1] + ']';
                 	set_textarea(select);
                 }
             break;
-            case 83: // s
+            case 'KeyS':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[s:' + select[1] + ']';
                 	set_textarea(select);
                 }
             break;
-            case 85: // u
+            case 'KeyU':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = cws.to.chartoasc(select[1]);
                 	set_textarea(select);
                 }
             break;
-            case 191: // /
+            case 'Slash':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = "/*\n" + select[1] + "\n*/";
                 	set_textarea(select);
                 }
             break;
-            case 222: // ~
-                if (e.altKey) {
+            // ～と〜いずれかに統一する秘密のショートカット
+            case 'Backquote':
+                if (e.altKey && e.ctrlKey) {
                     var text_position = textGetPosition(textarea);
                     if (e.shiftKey) {
                         textarea.value = textarea.value.replace(/〜/ug, '～');
@@ -773,11 +774,11 @@ cws.event('keydown', function(e){
         && document.activeElement.type.match(/text|password|email|tel|url|date|time|number|color/);
     window.mf_g_mode = mf_g && !e.ctrlKey && !text_activate;
     window.natural_mode = !mf_g && !e.ctrlKey && !text_activate;
-    switch (e.keyCode) {
-        case 71: // g
+    switch (e.code) {
+        case 'KeyG':
             if (!text_activate) do_mf_g = true;
         break;
-        case 78: // n
+        case 'KeyN':
             if (natural_mode && textarea !== null) {
                 if (!Object.prototype.toString.call(document.activeElement).match('HTMLBody')) {
                     activeFocus = document.activeElement;
@@ -790,7 +791,7 @@ cws.event('keydown', function(e){
                 e.returnValue = false;
             }
         break;
-        case 89: // y
+        case 'KeyY':
             if (natural_mode && textarea !== null && post_cursor >= 0) {
                 if (post_list[post_cursor].dataset.postId !== 'info-hide') {
                     window.activeFocus = post_cursor;
@@ -798,7 +799,7 @@ cws.event('keydown', function(e){
                 }
             }
         break;
-        case 191: // / -> search
+        case 'Slash': // / -> search
             if (natural_mode && search !== null) {
                 if (!Object.prototype.toString.call(document.activeElement).match('HTMLBody')) {
                     activeFocus = document.activeElement;
@@ -811,7 +812,7 @@ cws.event('keydown', function(e){
                 e.returnValue = false;
             }
         break;
-        case 115: // F4 -> image
+        case 'F4': // F4 -> image
             // document.querySelector('#file_selector').click();
         break;
     }
@@ -840,5 +841,5 @@ cws.event('keydown', function(e){
         window.jump_url = '';
     }
     mf_g = (do_mf_g) ? (!mf_g) : false;
-//         console.log(e.keyCode);
+//         console.log(e.code);
 }, document);

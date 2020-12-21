@@ -1,40 +1,44 @@
 if (typeof(window.other_sc) !== 'object') window.other_sc = new Object();
 if (typeof(window.other_sc.doc) !== 'object') window.other_sc.doc = new Array();
 window.other_sc.doc.push(function(e){
-    switch (e.keyCode) {
-        case 67: // c
-        break;
-        case 68: // d
+    switch (e.code) {
+        case 'KeyC':
+            if (mf_g_mode) window.jump_url = '/manage/creative/bbs'; break;
+        case 'KeyD':
             if (mf_g_mode) window.jump_url = '?q=%23開発'; break;
-        case 80: // p
-        break;
-        case 76: // l
+        case 'KeyP':
+            if (mf_g_mode) window.jump_url = '/manage/bbs'; break;
+        case 'KeyL':
             if (mf_g_mode) window.jump_url = '?q=%23生活'; break;
-        case 82: // r
+        case 'KeyR':
             if (mf_g_mode) window.jump_url = '?q=%23忘備録'; break;
-        case 83: // s
+        case 'KeyS':
             if (mf_g_mode) window.jump_url = '?q=%23🐑'; break;
-        case 89: // y
+        case 'KeyY':
             if (mf_g_mode) window.jump_url = '?q=%23やること'; break;
-        case 70: // f
+        case 'KeyF':
             if (mf_g_mode) window.jump_url = '?q=%23思索'; break;
-        case 77: // m
+        case 'KeyM':
             if (mf_g_mode) window.jump_url = '?q=%23メモ'; break;
-        case 79: // o
-            if (mf_g_mode) window.jump_url = '/thread'; break;
+        case 'KeyO':
+            if (mf_g_mode) window.jump_url = '/bbs'; break;
+        case 'Minus':
+            if (mf_g_mode) window.jump_url = '/manage/tmp/bbs'; break;
+        case 'Digit0':
+            if (mf_g_mode) window.jump_url = '/bbs/tmp'; break;
     }
-    //     console.log(e.keyCode);
+    //console.log(e.code);
 });
 window.other_sc.form.push(function(e){
     var script_mode = '';
-    switch (e.keyCode) {
-        case 71: // g
+    switch (e.code) {
+        case 'KeyG':
             if (e.altKey) { script_mode = 'RESPONSE'; }
         break;
-        case 82: // r
+        case 'KeyR':
             if (e.altKey) { script_mode = 'REPLY'; }
         break;
-        case 84: // t
+        case 'KeyT':
             if (e.altKey) { script_mode = 'TAG'; }
         break;
     }
