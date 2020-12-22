@@ -342,9 +342,9 @@ body>div.under.large
     margin-top: 0.2em;
 }
 .post_data .info > *{
-    margin-left: 0.5em;
+    margin-left: 0.8em;
 }
-.post_data .info span, .post_data .info > *{
+.post_data .info > *{
     vertical-align: middle;
 }
 span.date {
