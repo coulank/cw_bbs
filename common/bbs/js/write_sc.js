@@ -600,6 +600,13 @@ cws.ready(function(){
                 	set_textarea(select);
                 }
             break;
+            case 'Backspace':
+                if (e.altKey) {
+                    var select = textGetSelection(textarea);
+                    select[1] = select[1].replace(/^\[(\w*\:|)([\d\D]*)\]$/, '$2')
+                	set_textarea(select);
+                }
+            break;
             case 'Slash':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea, true);
