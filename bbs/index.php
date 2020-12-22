@@ -19,16 +19,14 @@ $page_limit = 50;
 
 $cws_guest_exit = false;
 
-require_once(get_docpath("/common/bbs/cgi/define.php"));
-
 if (!isset($this_define)) $this_define = array();
-
 $this_define += array(
     'title' => '掲示板サンプル',
     'description' => '趣味で作成した掲示板サイトです',
     'url' => '/bbs',
     'manifest' => '/bbs/thread.json',
 );
+require_once(get_docpath("/common/bbs/cgi/define.php"));
 
 if (!isset($cws_top_res_text)) {
     $cws_top_res_text = "[../:ログインへ戻る]";

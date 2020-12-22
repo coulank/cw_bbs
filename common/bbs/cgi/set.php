@@ -10,19 +10,6 @@ if ($owner_login) {
 }
 
 if (!isset($this_define)) $this_define = array();
-$this_define = array_merge($this_define, array(
-    'app-title' => '掲示板',
-    'twitter:creator' => '@tos', 'twitter:site' => '@tos', 
-    'twitter:card' => 'summary',
-    // 'og:title' => '', 'og:description' => '',
-)) + array(
-    'title' => '匿名掲示板',
-    'description' => '',
-    'url' => null,
-    'manifest' => '/common/bbs/manifests/thread.json',
-    'image' => '/common/images/icon/bbs_icon.png',
-    'theme-color' => 'black',
-);
 $theme_prefer = get_val($_COOKIE, 'theme_prefer', '');
 $title_length = 32;
 $title_add_text = '';
@@ -293,7 +280,7 @@ $q_value = get_val($cws_request, 'q', '');
         } ?></span>
         </div>
         <div class='info<?php if ($id_str === 'info-hide') echo(' hidden'); ?>'>
-            <span class='num'><?php echo $tag_index; ?>: </span><?php
+            <span class='num'><?php echo $tag_index; ?>:</span><?php
         if ($setinfo_owner && $owner_user === $var['name']) { ?><span><?php echo('(管理人)'); ?></span><?php }
         else if ($cws_thread_name_visible) { ?><span><?php echo($var['name']); ?></span><?php }
         $date_id_ins =  " id='date_$id_str'";

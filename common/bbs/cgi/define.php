@@ -30,6 +30,20 @@ $cws_filter_tag += array(
     )
 );
 
+if (!isset($this_define)) $this_define = array();
+$this_define += array(
+    'app-title' => '掲示板',
+    'twitter:creator' => '@tos', 'twitter:site' => '@tos', 
+    'twitter:card' => 'summary',
+    // 'og:title' => '', 'og:description' => '',
+    'title' => '匿名掲示板',
+    'description' => '',
+    'url' => null,
+    'manifest' => '/common/bbs/manifests/thread.json',
+    'image' => '/common/images/icon/bbs_icon.png',
+    'theme-color' => 'black',
+);
+
 if (!isset($tables)) $tables = array('BBS', 'ImportBBS');
 
 ?>

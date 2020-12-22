@@ -407,7 +407,7 @@ if (!$post_mode) {
         unset($tdb);
         array_push($top_res, $tmp_array);
     }
-for ($i = count($top_res) - 1; $i >= 0; $i--) {
+    for ($i = count($top_res) - 1; $i >= 0; $i--) {
         array_unshift($arr, $top_res[$i]);
     }
 }
