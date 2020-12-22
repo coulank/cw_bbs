@@ -298,10 +298,10 @@ $q_value = get_val($cws_request, 'q', '');
         else if ($cws_thread_name_visible) { ?><span><?php echo($var['name']); ?></span><?php }
         $date_id_ins =  " id='date_$id_str'";
         if ($id_is_num) {
-            ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><?php echo ($new_str); ?></a></span><?php
+            ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
         } elseif ($id_is_index) {
             if ($id_is_index) {
-                ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'><?php echo ($new_str) ?></a></span><?php
+                ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str) ?></a></span><?php
             }
             $theme = isset($_COOKIE['theme_prefer']) ? $_COOKIE['theme_prefer']: 'prefer';
             switch ($theme) {
@@ -330,9 +330,9 @@ $q_value = get_val($cws_request, 'q', '');
                 }
             }
         } elseif ($id_is_alarm) {
-            ?><span class='date'<?php echo($date_id_ins); ?>><a href='?q=view%3Aalarm'><?php echo ($new_str); ?></a></span><?php
+            ?><span class='date'><a href='?q=view%3Aalarm'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
         } elseif ($id_is_task) {
-            ?><span class='date'<?php echo($date_id_ins); ?>><a href='?q=view%3Atask'><?php echo ($new_str); ?></a></span><?php
+            ?><span class='date'><a href='?q=view%3Atask'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
         } else {
             ?><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span><?php
         }

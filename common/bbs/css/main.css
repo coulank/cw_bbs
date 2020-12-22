@@ -467,7 +467,6 @@ audio{
 .post_data .num{
     color: #aaa;
     width: auto;
-    padding-right: 1%;
     text-align: right;
     font-size: 1em;
     line-height: 1.2em;
@@ -480,9 +479,6 @@ audio{
     }
     .post_data .text .body{
         padding: 0 1.1em 0.4em;
-    }
-    .post_data .num{
-        padding-right: 0.2%;
     }
     .post_data .info{
         font-size: 0.7em;
