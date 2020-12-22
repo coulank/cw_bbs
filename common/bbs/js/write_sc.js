@@ -619,19 +619,17 @@ cws.ready(function(){
                     var esc_ci = String.fromCharCode(17), esc_co = 18;
                     var esc_qi = String.fromCharCode(19), esc_qo = 20;
                     var esc_multi = esc_ci + esc_qi;
-                    var text_value = textarea.value.replace(/(^|\n)(\/\*|>>)(\n|$)/g, function(m) {
-                        var mx = m.match(/^(\n?)([^\n]*)(\n?)$/);
-                        m = mx[2] + mx[3];
-                        switch(mx[2]) {
-                            case '/*': return mx[1] + esc_ci.repeat(m.length);
-                            case '>>': return mx[1] + esc_qi.repeat(m.length);
+                    var text_value = textarea.value.replace(/(\/\*|>>)/g, function(m) {
+                        switch(m) {
+                            case '/*': return esc_ci.repeat(m.length);
+                            case '>>': return esc_qi.repeat(m.length);
                         }
                     });
                     var text_value1 = text_value.slice(0,
                         textarea.selectionEnd + text_value.slice(textarea.selectionEnd).match(/(\n|$)/).index);
-                    var text_match = text_value1.match(new RegExp('(^|\n)([' + esc_multi + ']+)[^' + esc_multi + ']*$'));
+                    var text_match = text_value1.match(new RegExp('(^|\n)([' + esc_multi + ']+)(\n|$)([^' + esc_multi + ']*)$'));
                     if (text_match === null) {
-                        text_match = text_value.match(new RegExp('(^|\n)([' + esc_multi + ']+)'));
+                        text_match = text_value.match(new RegExp('(^|\n)([' + esc_multi + ']+)(\n|$)'));
                     }
                     if (text_match !== null) {
                         var text_search = '';
@@ -645,16 +643,17 @@ cws.ready(function(){
                             default:
                             break;
                         }
-                        var text_value2 = text_value.slice(text_match.index + (text_match[1] + text_match[2]).length);
+                        var text_value2_slice = text_match.index + text_match[1].length + text_match[2].length + text_match[3].length;
+                        var text_value2 = text_value.slice(text_value2_slice);
                         var text_match2 = text_value2.match(
                             new RegExp("(^|\n)(" + text_search + ")(\n|$)")
                         );
-                        if (text_match2 === null) text_match2 = text_value2.match(/(^)(\d\D)($)/);
+                        if (text_match2 === null) text_match2 = text_value2.match(/()()(\n*)$/);
                         var setvalue_array = (new Array(
                             textarea.value.slice(0, text_match.index) + text_match[1],
-                            text_value2.slice(0, text_match2.index),
+                            textarea.value.slice(text_value2_slice).slice(0, text_match2.index),
                             text_match2[3] + textarea.value.slice(
-                                text_match.index + text_match[1].length + text_match[2].length
+                                text_value2_slice
                                 + text_match2.index + text_match2[0].length
                             )
                         ));
