@@ -600,7 +600,7 @@ cws.ready(function(){
                 	set_textarea(select);
                 }
             break;
-            case 'Backspace':
+            case 'Digit1':
                 if (e.altKey) {
                     var select = textGetSelection(textarea);
                     select[1] = select[1].replace(/^\[(\w*\:|)([\d\D]*)\]$/, '$2')
