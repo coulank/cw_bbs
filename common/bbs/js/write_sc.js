@@ -603,14 +603,16 @@ cws.ready(function(){
             case 'Slash':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea, true);
-                	select[1] = "/*\n" + select[1] + "\n*/";
+                	select[0] = select[0] + "/*\n";
+                    select[2] = "\n*/" + select[2];
                 	set_textarea(select);
                 }
             break;
             case 'Period':
                 if (e.altKey) {
                 	var select = textGetSelection(textarea, true);
-                	select[1] = ">>\n" + select[1] + "\n<<";
+                	select[0] = select[0] + ">>\n";
+                	select[2] = "\n<<" + select[2];
                 	set_textarea(select);
                 }
             break;
@@ -649,7 +651,7 @@ cws.ready(function(){
                             new RegExp("(^|\n)(" + text_search + ")(\n|$)")
                         );
                         if (text_match2 === null) text_match2 = text_value2.match(/()()(\n*)$/);
-                        var setvalue_array = (new Array(
+                        var select = (new Array(
                             textarea.value.slice(0, text_match.index) + text_match[1],
                             textarea.value.slice(text_value2_slice).slice(0, text_match2.index),
                             text_match2[3] + textarea.value.slice(
@@ -657,9 +659,7 @@ cws.ready(function(){
                                 + text_match2.index + text_match2[0].length
                             )
                         ));
-                        textarea.value = setvalue_array.join('');
-                        textarea.selectionStart = setvalue_array[0].length;
-                        textarea.selectionEnd = textarea.selectionStart + setvalue_array[1].length;
+                        set_textarea(select);
                     }
                 }
             break;
@@ -786,22 +786,30 @@ var textSetPosition = function(textElement, arg_position){
 var textSetSelection = function(setValue, textElement, rangeFlag){
 	textElement = cws.check.nullvar(textElement, document.querySelector('textarea'));
 	setValue = cws.check.nullvar(setValue, null);
-	setType = typeof(setValue);
+    setType = typeof(setValue);
+    var select = null;
+    
 	if (setValue === null) { return textElement; }
 	else if(setType !== 'string') {
 		if (typeof(setValue.join) === 'function') {
+            select = setValue;
 			setValue = setValue.join('');
 		} else {
 			setValue = setValue.toString();
 		}
 	}
-	rangeFlag = cws.check.nullvar(rangeFlag, true);
-	var firstPos = textElement.selectionStart;
-	var endPos = firstPos;
-	if (rangeFlag) endPos = textElement.selectionEnd - (textElement.value.length - setValue.length);
-	textarea.value = setValue;
-    textElement.selectionStart = firstPos;
-    textElement.selectionEnd = endPos;
+    if (select === null) {
+        var firstPos = textElement.selectionStart;
+        var endPos = firstPos;
+        if (rangeFlag) endPos = textElement.selectionEnd - (textElement.value.length - setValue.length);
+        textarea.value = setValue;
+        textElement.selectionStart = firstPos;
+        textElement.selectionEnd = endPos;
+    } else {
+        textarea.value = setValue;
+        textarea.selectionStart = select[0].length;
+        textarea.selectionEnd = textarea.selectionStart + select[1].length;
+    }
 	return textElement;
 };
 var textGetSelection = function(textElement, lineFlag){
