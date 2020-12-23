@@ -282,7 +282,7 @@ $q_value = get_val($cws_request, 'q', '');
         <div class='info<?php if ($id_str === 'info-hide') echo(' hidden'); ?>'>
             <span class='num'><?php echo $tag_index; ?>:</span><?php
         if ($setinfo_owner && $owner_user === $var['name']) { ?><span><?php echo('(管理人)'); ?></span><?php }
-        else if ($cws_thread_name_visible) { ?><span><?php echo($var['name']); ?></span><?php }
+        else if ($cws_bbs_name_visible && $var['name'] !== '') { ?><span><?php echo($var['name']); ?></span><?php }
         $date_id_ins =  " id='date_$id_str'";
         if ($id_is_num) {
             ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php

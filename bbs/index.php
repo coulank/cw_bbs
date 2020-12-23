@@ -66,7 +66,7 @@ if ($url_name === '') {
         $addr_edit_mode = false;
     } else {
         $cws_thread_htmlsp = false;
-        $cws_thread_name_visible = true;
+        $cws_bbs_name_visible = true;
     }
 } else {
     $cws_top_res_name = 'Current { '.$url_name.' }';
@@ -82,7 +82,7 @@ if ($url_name === '') {
     } elseif(preg_match('/te?mp/i', $url_name)){
         $owner_login = true;
         $addr_edit_mode = false;
-        $cws_thread_name_visible = true;
+        $cws_bbs_name_visible = true;
         $delete_tmp_path = "$tmp_bbs_path/public";
         $file_dir ="$delete_tmp_path/objects/";
         $cws_sqlite_host = path_auto_doc("$delete_tmp_path/bbs_content.db", true);
@@ -91,7 +91,7 @@ if ($url_name === '') {
         $this_define['title'] = '一時所';
     } else {
         $owner_login = true;
-        $cws_thread_name_visible = true;
+        $cws_bbs_name_visible = true;
     }
     $cws_secret_search_q = 'thread:'.$url_name;
     $threads = $url_name;

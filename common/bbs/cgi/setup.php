@@ -23,7 +23,7 @@ if (!isset($os_mode)) {
     }
 }
 $setinfo_owner = isset($setinfo_owner) ? $setinfo_owner : true;
-$cws_thread_name_visible = isset($cws_thread_name_visible) ? $cws_thread_name_visible : false;
+$cws_bbs_name_visible = isset($cws_bbs_name_visible) ? $cws_bbs_name_visible : false;
 $cws_thread_htmlsp = isset($cws_thread_htmlsp) ? $cws_thread_htmlsp : true;
 $postform_enable = isset($postform_enable) ? $postform_enable : true;
 $edit_mode = $owner_login;
