@@ -345,6 +345,7 @@ body>div.under.large
     margin-left: 0.8em;
 }
 .post_data .info > *{
+    display: inline-block;
     vertical-align: middle;
 }
 span.date {
