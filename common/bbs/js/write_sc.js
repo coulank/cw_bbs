@@ -174,10 +174,10 @@ cws.ready(function(){
     var get_postdata_element = function(id){
         return document.getElementById('post_'+id.toString());
     };
-    window.update_postdata_textarea = function(id, rewrite_text) {
+    window.update_postdata_textarea = function(id, rewrite_text_flag) {
         var postdata = document.querySelector('.post_data.update_target');
         var calling_elem = null;
-        rewrite_text = cws.check.nullvar(rewrite_text, true);
+        rewrite_text_flag = cws.check.nullvar(rewrite_text_flag, true);
         if (postdata !== null) {
             postdata.classList.remove('update_target');
             calling_elem = postdata.querySelector('.update_calling_elem');
@@ -201,9 +201,11 @@ cws.ready(function(){
             } else {
                 rewrite_value = postdata.dataset["textOrigin"];
             }
-            if (rewrite_text) {
+            if (rewrite_text_flag) {
                 form_submit.disabled = true;
                 textarea.value = rewrite_value;
+                var rv_l = rewrite_value.length;
+                setTimeout(function(){ textarea.selectionStart = rv_l; },1);
             } else {
                 form_submit.disabled = (textarea.value === rewrite_value);
             }
