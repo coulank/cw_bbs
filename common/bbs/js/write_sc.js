@@ -565,6 +565,7 @@ cws.ready(function(){
             case 'KeyP':
                 if (e.altKey) {
                     textarea.value = textarea.value.replace(/(#!\s*\S*\s+|@tos\s+|@tos$|^)/, "@tos ");
+                    submit_able();
                 }
             break;
             case 'KeyB':
@@ -682,6 +683,7 @@ cws.ready(function(){
                         textarea.value = textarea.value.replace(/～/ug, '〜');
                     }
                     textSetPosition(textarea, text_position);
+                    submit_able();
                 }
             break;
         }
