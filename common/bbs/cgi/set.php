@@ -341,7 +341,7 @@ $q_value = get_val($cws_request, 'q', '');
             }
             ?><span class='date'><a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a></span><?php
         }
-        if ($id_is_edit_num||($_edit_mode&&($id_is_alarm||$id_is_task))) {
+        if ($postform_enable && ($id_is_edit_num||($_edit_mode&&($id_is_alarm||$id_is_task)))) {
             ?><span class='date'><a href='' class='update_calling_elem' onclick='return update_postdata_textarea("<?php echo $id_str; ?>", true);'>▽</a></span><?php
         }?>
         </div>
