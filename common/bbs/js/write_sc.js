@@ -872,7 +872,15 @@ cws.event('keydown', function(e){
                 e.returnValue = false;
             }
         break;
-        case 'KeyY':
+        case 'Enter':
+			if (e.ctrlKey && post_cursor >= 0) {
+				var date_elm = document.getElementById('date_' + post_list[post_cursor].dataset.postId);
+				if (date_elm !== null) {
+					date_elm.click();
+				}
+			}
+        break;
+        case 'KeyM':
             if (natural_mode && textarea !== null && post_cursor >= 0) {
                 if (post_list[post_cursor].dataset.postId !== 'info-hide') {
                     window.activeFocus = post_cursor;
