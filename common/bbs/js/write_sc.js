@@ -852,7 +852,7 @@ var textGetSelection = function(textElement, lineFlag){
 cws.event('keydown', function(e){
     var do_mf_g = false;
     window.text_activate = typeof(document.activeElement.type) !== 'undefined'
-        && document.activeElement.type.match(/text|password|email|tel|url|date|time|number|color/);
+        && document.activeElement.type.match(/text|submit|password|email|tel|url|date|time|number|color/);
     window.mf_g_mode = mf_g && !e.ctrlKey && !text_activate;
     window.natural_mode = !mf_g && !e.ctrlKey && !text_activate;
     switch (e.code) {
@@ -872,20 +872,19 @@ cws.event('keydown', function(e){
                 e.returnValue = false;
             }
         break;
-        case 'Enter':
-			if (e.ctrlKey && post_cursor >= 0) {
-				var date_elm = document.getElementById('date_' + post_list[post_cursor].dataset.postId);
-				if (date_elm !== null) {
-					date_elm.click();
-				}
-			}
-        break;
         case 'KeyM':
-            if (natural_mode && textarea !== null && post_cursor >= 0) {
-                if (post_list[post_cursor].dataset.postId !== 'info-hide') {
-                    window.activeFocus = post_cursor;
-                    update_postdata_textarea(post_list[post_cursor].dataset.postId, true);
-                }
+            if (post_cursor >= 0) {
+				if (natural_mode && textarea !== null) {
+					if (post_list[post_cursor].dataset.postId !== 'info-hide') {
+						window.activeFocus = post_cursor;
+						update_postdata_textarea(post_list[post_cursor].dataset.postId, true);
+					}
+				} else if (e.ctrlKey && !text_activate) {
+					var date_elm = document.getElementById('date_' + post_list[post_cursor].dataset.postId);
+					if (date_elm !== null) {
+						date_elm.click();
+					}
+				}
             }
         break;
         case 'Slash': // / -> search
