@@ -882,7 +882,7 @@ cws.event('keydown', function(e){
 				} else if (e.ctrlKey && !text_activate) {
 					var date_elm = document.getElementById('date_' + post_list[post_cursor].dataset.postId);
 					if (date_elm !== null) {
-						date_elm.click();
+						window.jump_url = date_elm.href;
 					}
 				}
             }
@@ -921,6 +921,9 @@ cws.event('keydown', function(e){
                 }
             }
             if (window.jump_url !== '') {
+				var ae = document.createElement('a');
+				ae.href = window.jump_url;
+            	if (location.href !== ae.href) set_post_cursor();
                 location.href = window.jump_url;
             }
         } catch (e) {
