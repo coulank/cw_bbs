@@ -316,16 +316,16 @@ cws.ready(function(){
             select_last = true;
         }
     }
-	if (storage_text !== '') {
+    if (storage_text !== '') {
         textarea.value = storage_text;
         form_submit.disabled = textarea.value === textarea_default;
     }
     var storage_upt = cws.storage.get(storage_upt_key, true);
-	if (storage_upt !== '') {
+    if (update_target.value === '' && storage_upt !== '') {
         update_target.value = storage_upt;
     }
     if (update_target.value !== '') {
-        update_postdata_textarea(update_target.value, (storage_upt === ''));
+        update_postdata_textarea(update_target.value, (storage_upt === '' || storage_text === ''));
         activeFocus = post_cursor;
     }
 

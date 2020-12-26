@@ -372,6 +372,13 @@ if (!$post_mode) {
             'text'=> '' , 'posts' => 'size', 'name' => 'サイズ'
         ));
     }
+    switch($cws_request['id']) {
+        case 'index': case 'task': case 'alarm':
+            $option_key = 'view_'.$cws_request['id'];
+            if (!isset($option[$option_key])) $option[$option_key] = true;
+        break;
+    }
+    
     if (!isset($alarm_enable)) $alarm_enable = true;
     if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
         $now = new \DateTime();
@@ -395,7 +402,7 @@ if (!$post_mode) {
         ));
     }
     if (!isset($task_enable)) $task_enable = true;
-    if (($task_enable && isset($_COOKIE['task'])) || isset($option['view_task'])) {
+    if (($task_enable && (isset($_COOKIE['task'])) || isset($option['view_task']))) {
         $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
         $tdb = DB::create($db_sqlite_tmp);
         thread_index_check($tdb);

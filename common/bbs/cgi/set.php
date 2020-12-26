@@ -191,6 +191,7 @@ $q_value = get_val($cws_request, 'q', '');
                 'q' => $cws_request['q'],
                 'highlight_q' => $highlight_q
             ));
+        $view_index = isset($option['view_index']);
         $view_alarm = isset($option['view_alarm']);
         $cookie_alarm = isset($_COOKIE['alarm']);
         $view_task = isset($option['view_task']);
@@ -251,7 +252,11 @@ $q_value = get_val($cws_request, 'q', '');
             }
             $id_is_alarm = $id_str === 'alarm';
             $id_is_task = $id_str === 'task';
-            $strong_mode = ($id_is_alarm && $view_alarm);
+            $id_view_alarm = ($id_is_alarm && $view_alarm);
+            $id_view_task = ($id_is_task && $view_task);
+            $id_view_index = ($id_is_index && $view_index);
+            $post_main_mode = $id_is_num || $id_view_index || $id_view_alarm || $id_view_task;
+            $strong_mode = $id_view_alerm;
             $center_mode = ($id_is_alarm);
             $id_is_edit_num = ($_edit_mode && $id_is_num) || $index_edit;
     
@@ -268,7 +273,7 @@ $q_value = get_val($cws_request, 'q', '');
             if ($treemode && $direct_index) { $tag_index = 'tree_'.$tag_index; }
             $body_id_ins = " id='body_$id_str'";
         ?>
-    <div class='post_data<?php if ($id_is_num) { ?> post_main<?php }
+    <div class='post_data<?php if ($post_main_mode) { ?> post_main<?php }
         ?>' id='post_<?php echo ($id_str) ?>' data-post-id='<?php echo ($id_str);
         ?>' data-text-origin="<?php echo $text_origin ?>">
         <div class='text'>
@@ -284,9 +289,7 @@ $q_value = get_val($cws_request, 'q', '');
         if ($setinfo_owner && $owner_user === $var['name']) { ?><span><?php echo('(管理人)'); ?></span><?php }
         else if ($cws_bbs_name_visible && $var['name'] !== '') { ?><span><?php echo($var['name']); ?></span><?php }
         $date_id_ins =  " id='date_$id_str'";
-        if ($id_is_num) {
-            ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
-        } elseif ($id_is_index) {
+        if ($id_is_index) {
             if ($id_is_index) {
                 ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str) ?></a></span><?php
             }
@@ -306,20 +309,18 @@ $q_value = get_val($cws_request, 'q', '');
                 if ($view_alarm) {
                     ?><span class='date'><a href='?q=on%3Aalarm' onclick='return confirm("3時間毎のアラームを設置しますか？");'>＋</a></span><?php
                 } else {
-                    ?><span class='date'><a href='?q=view%3Aalarm'>Ⅲ</a></span><?php
+                    ?><span class='date'><a href='?id=alarm'>Ⅲ</a></span><?php
                 }
             }
             if ($_edit_mode && $task_enable && !$cookie_task) {
                 if ($view_task) {
                     ?><span class='date'><a href='?q=on%3Atask' onclick='return confirm("タスクを設置しますか？");'>＋</a></span><?php
                 } else {
-                    ?><span class='date'><a href='?q=view%3Atask'>Ｔ</a></span><?php
+                    ?><span class='date'><a href='?id=task'>Ｔ</a></span><?php
                 }
             }
-        } elseif ($id_is_alarm) {
-            ?><span class='date'><a href='?q=view%3Aalarm'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
-        } elseif ($id_is_task) {
-            ?><span class='date'><a href='?q=view%3Atask'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
+        } elseif($id_is_num || $id_is_alarm || $id_is_task) {
+            ?><span class='date'><a href='?id=<?php echo($id_str); if ($direct_index){echo('&p=0');} ?>'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></a></span><?php
         } else {
             ?><span class='date'<?php echo($date_id_ins); ?>><?php echo ($new_str); ?></span><?php
         }
