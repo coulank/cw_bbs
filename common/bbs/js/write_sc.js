@@ -181,12 +181,14 @@ cws.ready(function(){
         if (postdata !== null) {
             postdata.classList.remove('update_target');
             calling_elem = postdata.querySelector('.update_calling_elem');
-            if (calling_elem !== null) calling_elem.innerHTML = '▽';
-            if (update_target.value == id) {
-                update_target.value = '';
-                textarea.value = textarea_default;
-                form_submit.disabled = true;
-                return false;
+            if (calling_elem !== null) {
+            	calling_elem.innerHTML = '▽';
+				if (update_target.value == id) {
+					update_target.value = '';
+					textarea.value = textarea_default;
+					form_submit.disabled = true;
+					return false;
+				}
             }
         }
         postdata = get_postdata_element(id);
@@ -321,9 +323,12 @@ cws.ready(function(){
     var storage_upt = cws.storage.get(storage_upt_key, true);
 	if (storage_upt !== '') {
         update_target.value = storage_upt;
-        update_postdata_textarea(storage_upt, false);
+    }
+    if (update_target.value !== '') {
+        update_postdata_textarea(update_target.value, (storage_upt === ''));
         activeFocus = post_cursor;
     }
+
     var storage_sel = cws.storage.get(storage_selection_key, true, true);
     if (storage_sel !== null) {
         pos_mouse_down = false;

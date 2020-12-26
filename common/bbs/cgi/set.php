@@ -163,7 +163,7 @@ $q_value = get_val($cws_request, 'q', '');
                 </div>
                 <div class="up_list" id="up_list"></div>
             </div>
-            <input type='hidden' name='update_target' value="">
+            <input type='hidden' name='update_target' value="<?php echo($update_target_only); ?>">
             <input type='hidden' name='q' value="<?php echo get_val($cws_request, 'q', ''); ?>"><?php
             if (isset($cws_request['p'])) { ?>
             <input type='hidden' name='p' value="<?php echo($cws_request['p']); ?>"><?php }
@@ -341,7 +341,7 @@ $q_value = get_val($cws_request, 'q', '');
             }
             ?><span class='date'><a href='' onclick='return delete_action("<?php echo $id_str; ?>");'>×</a></span><?php
         }
-        if ($postform_enable && ($id_is_edit_num||($_edit_mode&&($id_is_alarm||$id_is_task)))) {
+        if ($postform_enable && ($id_is_edit_num||($_edit_mode&&($id_is_alarm||$id_is_task))) && $update_target_only === '') {
             ?><span class='date'><a href='' class='update_calling_elem' onclick='return update_postdata_textarea("<?php echo $id_str; ?>", true);'>▽</a></span><?php
         }?>
         </div>

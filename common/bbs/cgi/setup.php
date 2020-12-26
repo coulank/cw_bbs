@@ -11,6 +11,7 @@ if (!isset($cws_add_notag_q)) $cws_add_notag_q = '';
 if (!isset($owner_login)) $owner_login = false;
 if (!isset($post_mode)) $post_mode = false;
 if (!isset($postform_enable)) $postform_enable = true;
+if (!isset($update_target_only)) $update_target_only = '';
 if (!isset($os_mode)) {
     $os_mode = '';
     switch(PHP_OS) {
