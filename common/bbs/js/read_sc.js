@@ -111,6 +111,7 @@ window.smooth_scroll_top = function(retval){
     return retval;
 }
 window.switch_search_option = function(e, open, close){
+    if (typeof(e) === 'undefined') e = window.default_switch_search;
     var e_flag = typeof(e) !== 'undefined';
     if (old_mode) {
         var hidden = false;
@@ -252,6 +253,7 @@ window.search_load = function(){
     }
 }
 cws.ready(function(){
+    window.default_switch_search = document.getElementById('switch_search');
     search_load();
     if (typeof(document.querySelector)!=='undefined') {
         var m = null;
@@ -283,4 +285,14 @@ cws.ready(function(){
     }
     cookieScroll('first');
     cookieScroll('last');
+    window.before_focus = null;
+    window.default_switch_search.addEventListener('mousedown', function(e){
+        before_focus = document.activeElement;
+    });
+    window.default_switch_search.addEventListener('focus', function(e){
+        if (window.before_focus !== null) {
+            window.before_focus.focus();
+        }
+        window.before_focus = null;
+    });
 }, window);

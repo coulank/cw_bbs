@@ -898,6 +898,8 @@ cws.event('keydown', function(e){
                 }
                 search.focus();
                 e.returnValue = false;
+            } else if (e.ctrlKey) {
+            	switch_search_option();
             }
         break;
         case 'F4': // F4 -> image

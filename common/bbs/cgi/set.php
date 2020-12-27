@@ -80,7 +80,7 @@ $q_value = get_val($cws_request, 'q', '');
     <div class='set fixed right top unselectable search'>
         <button class='jump top-fade' onclick="return smooth_scroll_top(false);">▲</button>
         <form id='form_search_option' onsubmit='return search_action();'>
-            <input type='button' class='button top' onclick="switch_search_option(this);" value='▽'>
+            <input type='button' id='switch_search' class='button top' onclick="switch_search_option(this);" value='▽'>
             <div id='search_option' class='hidden text_left'>
                 <div>
                     <label><span>regex:</span><input type='checkbox' name='regex'></label>
