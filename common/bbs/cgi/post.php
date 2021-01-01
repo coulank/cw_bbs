@@ -1,6 +1,7 @@
 <?php
 namespace cws;
 $index_post_mode = (isset($index_post_mode)) ? $index_post_mode : false;
+// ini_set('display_errors', "On");
 if ($index_post_mode) { ob_start(); }
 $isset_text = isset($_REQUEST['text']);
 $post_exit = false;

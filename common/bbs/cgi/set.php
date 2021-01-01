@@ -256,7 +256,7 @@ $q_value = get_val($cws_request, 'q', '');
             $id_view_task = ($id_is_task && $view_task);
             $id_view_index = ($id_is_index && $view_index);
             $post_main_mode = $id_is_num || $id_view_index || $id_view_alarm || $id_view_task;
-            $strong_mode = $id_view_alerm;
+            $strong_mode = $id_view_alarm;
             $center_mode = ($id_is_alarm);
             $id_is_edit_num = ($_edit_mode && $id_is_num) || $index_edit;
     

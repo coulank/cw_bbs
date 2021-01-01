@@ -727,7 +727,7 @@ cws.ready(function(){
         onload:function(e){
             textarea.value = '';
             go_firstp();
-            // console.log(e);
+//             console.log(e);
         }});
         return false;
     }

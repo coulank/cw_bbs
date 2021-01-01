@@ -376,9 +376,11 @@ if (!$post_mode) {
         case 'index': case 'task': case 'alarm':
             $option_key = 'view_'.$cws_request['id'];
             if (!isset($option[$option_key])) $option[$option_key] = true;
+            $option_key = 'id_'.$cws_request['id'];
+            if (!isset($option[$option_key])) $option[$option_key] = true;
         break;
     }
-    
+    if (isset($option['id_index'])) $top_res[0]['direct_index'] = true;
     if (!isset($alarm_enable)) $alarm_enable = true;
     if (($alarm_enable && isset($_COOKIE['alarm'])) || isset($option['view_alarm'])) {
         $now = new \DateTime();
@@ -393,27 +395,30 @@ if (!$post_mode) {
         $diff_min = intval($diff_time->format('%i'));
         $diff_sec = intval($diff_time->format('%s'));
         $cur_time = $now->format('Y-m-d H:i:s');
-        array_push($top_res, array(
+        $ins_arr = array(
             'text'=>($next_hour % 24).'時まで 後 '
             .(($diff_hour > 0) ? $diff_hour.'時間' : '')
             .(($diff_min > 0) ? $diff_min.'分' : '')
             .(($diff_hour < 1 && $diff_min < 10) ? $diff_sec.'秒' : '')
             , 'posts'=>'alarm', 'name' => 'アラーム', 'time' => $cur_time, 'new' => $cur_time
-        ));
+        );
+        if (isset($option['id_alarm'])) $ins_arr['direct_index'] = true;
+        array_push($top_res, $ins_arr);
     }
     if (!isset($task_enable)) $task_enable = true;
     if (($task_enable && (isset($_COOKIE['task'])) || isset($option['view_task']))) {
-        $tmp_array = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
+        $ins_arr = array('text'=>'' , 'posts'=>'task', 'name' => 'タスク');
         $tdb = DB::create($db_sqlite_tmp);
         thread_index_check($tdb);
         if ($tdb->exists($thread_index, 'name', $index_post_value)) {
             $sql = "SELECT `text`, `time` FROM `$thread_index` WHERE `name` = ?";
             $index_db_dir = $tdb->execute_all($sql, $index_post_value)[0];
-            $tmp_array['text'] = $index_db_dir['text'];
-            $tmp_array['new'] = $index_db_dir['time'];
+            $ins_arr['text'] = $index_db_dir['text'];
+            $ins_arr['new'] = $index_db_dir['time'];
+            if (isset($option['id_task'])) $ins_arr['direct_index'] = true;
         }
         unset($tdb);
-        array_push($top_res, $tmp_array);
+        array_push($top_res, $ins_arr);
     }
     for ($i = count($top_res) - 1; $i >= 0; $i--) {
         array_unshift($arr, $top_res[$i]);
