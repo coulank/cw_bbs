@@ -1,5 +1,6 @@
 <?php
 namespace cws;
+// データ取得用の関数
 
 function get_exec($param = null){
     global $db, $table_list, $thread_list, $thread_tables, $only_threads,

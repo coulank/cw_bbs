@@ -505,6 +505,7 @@ cws.ready(function(){
             }
             // リスト化など
             var inc = 0;
+            var beforeins = false, match_not = null;
             var str = '';
 			switch (e.code) {
                 case 'BracketRight':
@@ -512,12 +513,18 @@ cws.ready(function(){
                     inc = -1;
                 break;
                 case 'Minus':
-                    inc = 1;
-                    str = '-';
+                    if (!e.shiftKey) {
+						inc = 1;
+						str = '-';
+                    } else {
+                    	match_not = /(^|\n)={4,}\n?$/;
+						beforeins = true;
+						str = "====\n";
+                    }
                 break;
                 case 'Equal':
-                    inc = 1;
-                    str = '+';
+					inc = 1;
+					str = '+';
                 break;
                 case 'Quote':
                     inc = 1;
@@ -540,6 +547,14 @@ cws.ready(function(){
                         return m1 + m2;
                     });
                 set_textarea(select);
+            } else if (beforeins) {
+				var select = textGetSelection(textarea, true);
+				if (match_not === null || !select[0].match(match_not)) {
+					select[0] = select[0] + str;
+				}
+				select[2] = select[1] + select[2];
+				select[1] = '';
+				set_textarea(select);
             }
 		}
         switch (e.code) {
@@ -591,6 +606,13 @@ cws.ready(function(){
                 if (e.altKey) {
                 	var select = textGetSelection(textarea);
                 	select[1] = '[' + select[1] + ']';
+                	set_textarea(select);
+                }
+            break;
+            case 'KeyD':
+                if (e.ctrlKey && e.altKey) {
+                	var select = textGetSelection(textarea);
+                	select[1] = '[d:' + select[1] + ']';
                 	set_textarea(select);
                 }
             break;
